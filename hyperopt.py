@@ -41,7 +41,7 @@ def hyperopt(param_space, X_train, y_train, X_test, y_test, num_eval):
     def objective_function(params):
         gbr = lgb.LGBMClassifier(**params, random_state = 42)
         np.random.seed(42)
-        score = cross_val_score(gbr, X_train, y_train,scoring='neg_mean_squared_error', cv=4).mean()
+        score = cross_val_score(gbr, X_train, y_train,scoring='roc_auc', cv=4).mean()
         return {'loss': -score, 'status': STATUS_OK}
 
     trials = Trials()
@@ -57,3 +57,5 @@ def hyperopt(param_space, X_train, y_train, X_test, y_test, num_eval):
 
 num_eval = 100
 best_params = hyperopt(param_hyperopt, X_train, y_train, X_test, y_test, num_eval)
+
+model = lgb.LGBMClassifier(**space_eval(param_hyperopt, best_params), random_state = 42)
