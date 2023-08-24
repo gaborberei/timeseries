@@ -2,7 +2,7 @@ from hyperopt import fmin, tpe, hp, STATUS_OK, Trials, space_eval
 from hyperopt.pyll import scope
 from sklearn.model_selection import cross_val_score
 import lightgbm as lgb
-
+import time
 
 
 param_hyperopt = {
