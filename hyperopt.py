@@ -20,7 +20,7 @@ param_hyperopt = {
     "colsample_bytree": scope.float(hp.quniform('feature_fraction', 0.1, 0.9, 0.05))
 }
 
-def hyperopt(param_space, X_train, y_train, X_test, y_test, num_eval):
+def hyperopt(param_space, X_train, y_train, num_eval):
     '''
     Bayesian hyperparameter optimalization.
     
@@ -56,6 +56,7 @@ def hyperopt(param_space, X_train, y_train, X_test, y_test, num_eval):
     return best_param
 
 num_eval = 100
-best_params = hyperopt(param_hyperopt, X_train, y_train, X_test, y_test, num_eval)
+best_params = hyperopt(param_hyperopt, X_train, y_train, num_eval)
 
 model = lgb.LGBMClassifier(**space_eval(param_hyperopt, best_params), random_state = 42)
+
